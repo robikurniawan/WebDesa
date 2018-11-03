@@ -9,8 +9,25 @@ function cek_session_admin(){
     }
 }
 
+function get_no_invoice(){
+        $ci = & get_instance();
+        $q = $ci->db->query("SELECT MAX(RIGHT(id_realisasi,2)) AS kd_max FROM tbl_realisasi");
+        $kd = "";
+        if($q->num_rows()>0){
+            foreach($q->result() as $k){
+                $tmp = ((int)$k->kd_max)+1;
+                $kd = sprintf("%04s", $tmp);
+            }
+        }else{
+            $kd = "01";
+        }
+        date_default_timezone_set('Asia/Makassar');
+        return date('dmy').$kd;
+    }
 
-  
+
+
+
 
     function preloader()
     {

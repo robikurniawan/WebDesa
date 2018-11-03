@@ -43,7 +43,7 @@ class Realisasi_model extends CI_Model {
 		return $query->row_array();
 	}
 
-	
+
 
 
 
@@ -76,6 +76,13 @@ class Realisasi_model extends CI_Model {
 		$this->db->insert($this->table, $data);
 		return $this->db->insert_id();
 	}
+
+	public function save_dok($data)
+	{
+		$this->db->insert('tbl_dok', $data);
+		return $this->db->insert_id();
+	}
+
 
 	public function update($id,$data)
 	{

@@ -1,5 +1,5 @@
 
-<?php 
+<?php
  $persentasex = $re['persentase'];
  $sisax = 100 - $persentasex;
 
@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-6">
             <div class="pull-right">
-            
+
             </div>
         </div>
     </div>
@@ -39,15 +39,15 @@
                     <h3 class="box-title"><?= $kegiatan->nama_kegiatan ?></h3>
                 </div>
             <div class="body">
-                
+
                 <!-- <div class="container"> -->
-                
+
                 <div class="row">
-                    
+
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <table class="table">
                         <tr>
-                            <td>Bidang </td>
+                            <td>Bidang Penanggung Jawab  </td>
                             <td>:</td>
                             <td><?= $kegiatan->nama_bidang ?></td>
                         </tr>
@@ -93,79 +93,119 @@
                         </tr>
                         </table>
                     </div>
-                    
+
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <div id="grafik" style=" height: 300px; width: 100%; margin: 0 auto"></div>
+                        <div id="grafik" style=" height: 300px; width: ; margin: 0 auto"></div>
                         <div class="row ">
-                        
+                        <?php
+
+                        $persentasi=round($dana['total']/$kegiatan->biaya * 100);
+                        $sisax = 100 - $persentasi;
+
+
+                        ?>
+
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <span class="text-success">Terealisasi : <?= $persentase ?> % </span><br>
-                            <span class="text-success">Dana Digunakan  : 
-                                Rp. <?= format_rupiah($dana['total']) ?>  
+                            <!-- <span class="text-success">Terealisasi : <?= $persentase ?> % </span><br> -->
+                            <span class="text-success">Dana Digunakan  :
+                                Rp. <?= format_rupiah($dana['total']) ?>
                             </span>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
-                            <span class="text-danger">Belum Terealisasi :  <?= $sisa ?> %</span><br>
+                            <!-- <span class="text-danger">Belum Terealisasi :  <?= $sisa ?> %</span><br> -->
                             <span class="text-danger">Prakiraan Biaya :  Rp. <?= format_rupiah($kegiatan->biaya) ?> </span>
                         </div>
                     </div>
                     </div>
-                </div>
-                
-                
-           
-                
+                <!-- </div> -->
+
+
+
+
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="box-header with-border ">
-                    
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <h3 class="box-title"><b>Proses Realisasi Kegiatan </b></h3>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        </div>
-                                                
-                    </div>
+
+                            <h3 class="box-title"><b>Proses Realisasi Kegiatan </b></h3><br>
+
                 </div>
+                <div class="table-responsive">
                 <table class="table table-striped table-bordered">
-                    <tr style="background-color:#40ab66a1;">
-                        <th>No.</th>
-                        <th>Uraian Kegiatan</th>
-                        <th>Tanggal</th>
-                        <th>Dana Digunakan</th>
-                        <th>Progress Kegiatan</th>
-                        <th width="20%">Dokumentasi</th>
+                    <tr style="background-color:#89b3f0a1;">
+                        <th width="2%">No.</th>
+                        <th width="10%">Uraian Kegiatan</th>
+                        <th width="10%">PJ</th>
+                        <th width="10%">Tanggal</th>
+                        <th width="10%">Dana Digunakan</th>
+                        <th width="5%">Progress </th>
+                        <th width="10%">Dokumentasi</th>
                     </tr>
-                    <?php 
+                    <?php
                         $no = 1;
                         foreach ($realisasi as $key => $value) {
+                          $id_realisasi = $value->id_realisasi;
                     ?>
                         <tr>
                             <td><?= $no ?></td>
                             <td><?= $value->judul ?></td>
+                              <td><?= $value->pj ?></td>
                             <td><?= tgl_indo($value->tanggal)?></td>
                             <td>Rp. <?= format_rupiah($value->dana_digunakan) ?></td>
                             <td><?= $value->persentase ?> % </td>
                             <td>
-                                <img src="<?= base_url()?>assets/image/realisasi/<?= $value->gambar ?>" class="img-responsive" alt="">
+                                <!-- <img src="<?= base_url()?>assets/image/realisasi/<?= $value->gambar ?>" class="img-responsive" alt=""> -->
+                                <a href="#" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#dok-<?= $value->kode ?>" >Lihat Dokumentasi </a>
                             </td>
+
+                                  <div class="modal fade" id="dok-<?= $value->kode ?>" role="dialog">
+                                      <div class="modal-dialog modal-lg">
+                                          <div class="modal-content">
+                                              <div class="modal-header  bg-red">
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                  <h3 class="modal-title">Dokumentasi Kegiatan :  <?= $value->judul ?> </h3>
+                                              </div>
+                                              <div class="modal-body form">
+                                                  <?php
+                                                  $kode = $value->kode;
+                                                  $get_dok = $this->db->query("SELECT * FROM tbl_dok WHERE kode_realisasi = '$kode' ")->result();
+                                                  foreach ($get_dok as $key => $value_dok) {
+                                                  ?>
+                                                      <img src="<?= base_url()?>assets/image/tes/<?= $value_dok->gambar?>" class="img-responsive" alt="">
+                                                  <?php
+                                                  }
+                                                  ?>
+
+
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                              </div>
+                                              </form>
+                                          </div><!-- /.modal-content -->
+                                      </div><!-- /.modal-dialog -->
+                                  </div><!-- /.modal -->
+                                      <!-- End Bootstrap modal -->
+
+
+
+
                         </tr>
-                    <?php 
+                    <?php
                         $no++;
                         }
                     ?>
 
                 </table>
+                </div>
 
 
 
 
             </div>
-        
+
             </div>
-        <!-- </div> -->
+        </div>
         </div>
     </div>
 </section>
@@ -178,6 +218,18 @@ chart: {
     plotBorderWidth: false,
     plotShadow: false
 },
+
+credits: {
+    enabled: false
+},
+exporting: {
+   buttons: {
+       contextButton: {
+           enabled: false
+       }
+   }
+},
+
 title: {
     text: '',
     align: 'center',
@@ -185,7 +237,7 @@ title: {
     y: 40
 },
 tooltip: {
-    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    pointFormat: '{series.name}: <b>{point.percentage:.0f} %</b>'
 },
 plotOptions: {
     pie: {
@@ -209,8 +261,8 @@ series: [{
     name: 'Persentase ',
     innerSize: '50%',
     data: [
-    ['Terealisasi',<?= $persentase ?> ],
-    ['Belum Terealisasi',<?= $sisa ?>  ]
+    ['Dana Digunakan',<?= $persentasi; ?>],
+    ['Prakiraan Biaya', <?= $sisax; ?>]
     ]
 }]
 });
@@ -220,4 +272,48 @@ series: [{
 
 
 
+<div class="modal fade" id="modal-id">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Tambah Realisasi Kegiatan</h4>
+            </div>
+            <div class="modal-body">
+                <form action="<?= base_url()?>realisasi/add" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" value="<?= $kegiatan->id_kegiatan ?>" name="id_kegiatan">
+                    <input type="hidden" name="kode" value="<?= get_no_invoice() ?>">
 
+                    <div class="form-group">
+                        <label  for="">Uraian Kegiatan</label>
+                        <textarea name="judul" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label  for="">Tanggal </label>
+                        <input type="date" name="tanggal" class="form-control" id="">
+                    </div>
+                    <div class="form-group">
+                        <label  for="">Penanggung Jawab  </label>
+                        <input type="text" name="pj" class="form-control" id="">
+                    </div>
+                    <div class="form-group">
+                        <label  for="">Dana Digunakan </label>
+                        <input type="number" name="dana_digunakan" class="form-control" id="">
+                    </div>
+                    <div class="form-group">
+                        <label  for="">Progress Kegiatan (%) </label>
+                        <input type="number" name="persentase" class="form-control" id="">
+                    </div>
+                    <div class="form-group">
+                        <label  for="">Dokumentasi Kegiatan <small>* multiple </small> </label>
+                        <input type="file" name="gambar[]" multiple class="form-control" id="">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

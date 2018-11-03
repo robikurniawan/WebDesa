@@ -18,7 +18,7 @@
 <section class="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-        
+
         <?php
             foreach ($kegiatan as $key => $value) {
                 $id = $value->id_kegiatan;
@@ -30,13 +30,17 @@
                 $persentasex = $re['persentase'];
                 $sisax = 100 - $persentasex;
 
-                if ($persentasex == "" ) {
-                    $persentase = 0;
-                    $sisa = 100;
-                } else {
-                    $persentase = $persentasex;
-                    $sisa = $sisax;
-                }
+                // if ($persentasex == "" ) {
+                //     $persentase = 0;
+                //     $sisa = 100;
+                // } else {
+                //     $persentase = $persentasex;
+                //     $sisa = $sisax;
+                // }
+
+                $persentasi=round($dana['total']/$value->biaya * 100);
+                $sisax = 100 - $persentasi;
+
 
         ?>
 
@@ -47,27 +51,27 @@
                     <div style="height:400px; overflow:scroll">
                     <center>
                     <div id="grafik<?= $value->id_kegiatan ?>" style=" height: 200px; width: 100%; margin: 0 auto"></div>
-                    
-                    <p><b><a href="<?= base_url()?>front/detail_realisasi/<?= $value->id_kegiatan ?>"><?= $value->nama_kegiatan ?></a> </b></p> 
+
+                    <p><b><a href="<?= base_url()?>front/detail_realisasi/<?= $value->id_kegiatan ?>"><?= $value->nama_kegiatan ?></a> </b></p>
                     </center>
                     <div class="row ">
-                        
+
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <span class="text-success">Terealisasi : <?= $persentase ?> % </span><br>
+                            <span class="text-success">Terealisasi : <?= $persentasi ?> % </span><br>
                             <span class="text-success">Dana Digunakan  : <br>
-                                Rp. <?= format_rupiah($dana['total']) ?>  
+                                Rp. <?= format_rupiah($dana['total']) ?>
                             </span>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
-                            <span class="text-danger">Belum Terealisasi :  <?= $sisa ?> %</span>
+                            <span class="text-danger">Belum Terealisasi :  <?= $sisax ?> %</span>
                             <span class="text-danger">Prakiraan Biaya : <br> Rp. <?= format_rupiah($value->biaya) ?> </span>
                         </div>
                     </div>
                     <br>
                     <p>
                         <small> Catatan Progres Terakhir : <br>
-                        <i><?= $re['judul'] ?></i></small> 
+                        <i><?= $re['judul'] ?></i></small>
                      </p>
                     </div>
                     <!-- <center>
@@ -85,6 +89,18 @@
                     plotBorderWidth: false,
                     plotShadow: false
                 },
+
+                credits: {
+                    enabled: false
+                },
+                exporting: {
+                   buttons: {
+                       contextButton: {
+                           enabled: false
+                       }
+                   }
+               },
+
                 title: {
                     text: '',
                     align: 'center',
@@ -116,8 +132,8 @@
                     name: 'Persentase ',
                     innerSize: '50%',
                     data: [
-                    ['Terealisasi', <?= $persentase ?>],
-                    ['Belum Terealisasi', <?= $sisa ?>]
+                    ['Terealisasi', <?= $persentasi ?>],
+                    ['Belum Terealisasi', <?= $sisax ?>]
                     ]
                 }]
                 });
@@ -125,7 +141,7 @@
 
                 </script>
 
-        <?php 
+        <?php
             }
         ?>
 
@@ -134,8 +150,8 @@
 </section>
 
 
-   
- 
+
+
 
 
 
@@ -175,5 +191,3 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Bootstrap modal -->
-
-

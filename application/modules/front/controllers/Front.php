@@ -16,6 +16,8 @@ class Front extends CI_Controller {
 		$this->load->model('bidang/bidang_model','bidang');
 		$this->load->model('aparat/aparat_model','aparat');
 		$this->load->model('pengumuman/pengumuman_model','pengumuman');
+
+
 		$this->load->helper('send');
 
 
@@ -29,6 +31,26 @@ class Front extends CI_Controller {
 		$data['kegiatan'] = $this->kegiatan->get_all_by_fix();
 		$this->template->load('front/layouts','beranda',$data);
 	}
+
+
+	public function laporan()
+	{
+		$this->template->load('front/layouts','laporan');
+	}
+
+	public function laporan_kegiatan()
+	{
+		$data['get'] = $this->kegiatan->get_all();
+		$data['bidang'] = $this->bidang->get_all();
+		$this->template->load('front/layouts','laporan_kegiatan',$data);
+	}
+
+	public function laporan_realisasi()
+	{
+			$data['get'] = $this->realisasi->get_all_laporan();
+		$this->template->load('front/layouts','laporan_realisasi',$data);
+	}
+
 
 
 	//MENU PROFIL

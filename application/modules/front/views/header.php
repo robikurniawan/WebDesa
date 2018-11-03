@@ -34,6 +34,7 @@
                     <li><a href="<?= base_url('front/perencanaan')?>">Perencanaan</a></li>
                      <li><a href="<?= base_url('front/kegiatan')?>">Kegiatan</a></li>
                       <li><a href="<?= base_url('front/realisasi')?>">Realisasi</a></li>
+                      <li><a href="<?= base_url('front/laporan')?>">Laporan</a></li>
                      <li class="dropdown">
                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Regulasi <span class="caret"></span></a>
                        <ul class="dropdown-menu" role="menu">
@@ -48,7 +49,7 @@
                        </ul>
                      </li>
 
-                     <li><a href="<?= base_url('front/pengumuman')?>">Pengumuman</a></li>
+                     <!-- <li><a href="<?= base_url('front/pengumuman')?>">Pengumuman</a></li> -->
                      <li><a href="<?= base_url('front/galeri')?>">Galeri</a></li>
 
                   </div>

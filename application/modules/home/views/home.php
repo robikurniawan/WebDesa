@@ -188,11 +188,11 @@ function scroll(){
             <li><a href="<?= base_url()?>kategori_regulasi"><i class="fa fa-circle-o"></i> Kategori Regulasi</a></li>
           </ul>
         </li>
-        <li><a href="<?= base_url()?>pengumuman"><i class="fa fa-link"></i> <span>Pengumuman </span>  </a></li>
+        <!-- <li><a href="<?= base_url()?>pengumuman"><i class="fa fa-link"></i> <span>Pengumuman </span>  </a></li> -->
         <li><a href="<?= base_url()?>galeri"><i class="fa fa-link"></i> <span>Galeri </span>  </a></li>
         <li><a href="<?= base_url()?>laporan"><i class="fa fa-link"></i> <span>Laporan </span>  </a></li>
 
-       
+
 
 
         <li class="treeview">

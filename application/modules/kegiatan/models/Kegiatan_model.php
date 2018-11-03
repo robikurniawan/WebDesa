@@ -14,7 +14,11 @@ class Kegiatan_model extends CI_Model {
 
 	function get_all()
 	{
-		$query = $this->db->query("SELECT a.* , b.* FROM tbl_kegiatan a INNER JOIN tbl_bidang b ON a.id_bidang = b.id_bidang  ORDER BY a.id_kegiatan DESC");
+		$query = $this->db->query("SELECT a.* , b.*  , c.* FROM tbl_kegiatan a
+															INNER JOIN tbl_bidang b ON a.id_bidang = b.id_bidang
+															INNER JOIN tbl_aparat c ON a.aparat = c.id_aparat
+
+															ORDER BY a.id_kegiatan DESC");
 		return $query->result();
 	}
 

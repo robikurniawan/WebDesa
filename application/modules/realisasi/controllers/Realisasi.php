@@ -35,24 +35,60 @@ class Realisasi extends CI_Controller {
 
 		cek_session_admin();
 		$id = $this->input->post('id_kegiatan');
-		$config['upload_path'] = 'assets/image/realisasi/';
-		$config['allowed_types'] = 'gif|jpg|png|JPG|JPEG|PNG|jpeg';
-		$config['encrypt_name'] = TRUE;
-		$this->load->library('upload', $config);
+		// $config['upload_path'] = 'assets/image/tes/';
+		// $config['allowed_types'] = 'gif|jpg|png|JPG|JPEG|PNG|jpeg';
+		// $config['encrypt_name'] = TRUE;
+		// $this->load->library('upload', $config);
 
-			$this->upload->do_upload('gambar');
-			$image = $this->upload->data();
+
 
 			$data = array(
 				'id_kegiatan' 	=> $this->input->post('id_kegiatan'),
 				'judul' 	=> $this->input->post('judul'),
 				'tanggal' => $this->input->post('tanggal'),
+				'pj' => $this->input->post('pj'),
 				'dana_digunakan' => $this->input->post('dana_digunakan'),
 				'persentase' => $this->input->post('persentase'),
-				'gambar' => $image['file_name']
+				'kode' => $this->input->post('kode')
+
 			);
 
 		$this->realisasi->save($data);
+
+		$jml_gambar = count($_FILES['gambar']['name']);
+		// echo $jml_gambar;
+		$data = array();
+
+        if(!empty($_FILES['gambar']['name'])){
+
+            $filesCount = count($_FILES['gambar']['name']);
+
+            for($i = 0; $i < $filesCount; $i++){
+							 $_FILES['upload_File']['name'] = $_FILES['gambar']['name'][$i];
+							 $_FILES['upload_File']['type'] = $_FILES['gambar']['type'][$i];
+							 $_FILES['upload_File']['tmp_name'] = $_FILES['gambar']['tmp_name'][$i];
+							 $_FILES['upload_File']['error'] = $_FILES['gambar']['error'][$i];
+							 $_FILES['upload_File']['size'] = $_FILES['gambar']['size'][$i];
+							 $uploadPath = 'assets/image/tes/';
+							 $config['upload_path'] = $uploadPath;
+							 $config['allowed_types'] = 'gif|jpg|png';
+							 $this->load->library('upload', $config);
+
+                $this->upload->initialize($config);
+                if($this->upload->do_upload('upload_File')){
+                    $fileData = $this->upload->data();
+                    $uploadData[$i]['file_name'] = $fileData['file_name'];
+
+										$datax = array('kode_realisasi' => $this->input->post('kode') , 'gambar' => $uploadData[$i]['file_name']  );
+
+										$this->realisasi->save_dok($datax);
+
+
+                }
+            }
+
+        }
+
 		$this->session->set_flashdata('notifikasi','success');
 
 		redirect(base_url('realisasi/detail/'.$id.' '));

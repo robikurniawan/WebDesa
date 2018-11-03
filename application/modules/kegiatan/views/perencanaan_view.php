@@ -29,7 +29,7 @@
                         <thead>
                             <tr>
                                 <th width="5%">No.</th>
-                                <th>Bidang </th>
+                                <th>Bidang / PJ </th>
                                 <th>Nama Kegiatan</th>
                                 <th>Lokasi</th>
                                 <th  width="13%">Prakiraan Biaya</th>
@@ -55,7 +55,7 @@
                             ?>
                             <tr>
                                 <td><?= $no ?></td>
-                                <td><?= $value->nama_bidang ?></td>
+                                <td><?= $value->nama_bidang ?> / <?= $value->nama ?>  </td>
                                 <td><?= $value->nama_kegiatan ?></td>
                                 <td><?= $value->lokasi ?></td>
                                 <td>Rp. <?= format_rupiah($value->biaya) ?></td>
@@ -242,6 +242,26 @@
                                                     </div>
 
                                                     <div class="form-group">
+                                                        <label class="control-label">Aparat Penanggung Jawab  : </label>
+                                                        <select name="aparat" class="form-control" required id="">
+                                                            <option value="">Pilih</option>
+                                                            <?php
+                                                                foreach ($aparat as $key => $valuex) {
+                                                                  if ($valuex->id_aparat == $value->aparat) {
+                                                                      $select = "selected";
+                                                                  } else {
+                                                                      $select = "";
+                                                                  }
+                                                            ?>
+                                                                <option value="<?= $valuex->id_aparat ?>" <?= $select ?> > <?= $valuex->nama ?> </option>
+                                                            <?php
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="form-group">
                                                         <label class="control-label">Nama Kegiatan : </label>
                                                         <textarea name="nama_kegiatan" class="form-control"><?= $value->nama_kegiatan ?></textarea>
                                                     </div>
@@ -385,6 +405,21 @@
                             ?>
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Aparat Penanggung Jawab  : </label>
+                        <select name="aparat" class="form-control" required id="">
+                            <option value="">Pilih</option>
+                            <?php
+                                foreach ($aparat as $key => $value) {
+                            ?>
+                                <option value="<?= $value->id_aparat ?>"> <?= $value->nama ?> </option>
+                            <?php
+                                }
+                            ?>
+                        </select>
+                    </div>
+
 
                     <div class="form-group">
                         <label class="control-label">Nama Kegiatan : </label>

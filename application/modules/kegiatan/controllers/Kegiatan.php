@@ -8,6 +8,7 @@ class Kegiatan extends CI_Controller {
     	parent::__construct();
 		$this->load->model('kegiatan_model','kegiatan');
 		$this->load->model('bidang/bidang_model','bidang');
+		$this->load->model('aparat/aparat_model','aparat');
 	}
 
 	public function index()
@@ -15,6 +16,7 @@ class Kegiatan extends CI_Controller {
 		cek_session_admin();
 		$data['get'] = $this->kegiatan->get_all_by_fix();
 		$data['bidang'] = $this->bidang->get_all();
+
 		$this->template->load('home/home','kegiatan_view',$data);
 	}
 
@@ -23,6 +25,7 @@ class Kegiatan extends CI_Controller {
 		cek_session_admin();
 		$data['get'] = $this->kegiatan->get_all();
 		$data['bidang'] = $this->bidang->get_all();
+			$data['aparat'] = $this->aparat->get_all();
 		$this->template->load('home/home','perencanaan_view',$data);
 	}
 
@@ -40,7 +43,8 @@ class Kegiatan extends CI_Controller {
 						'biaya' 	=> $this->input->post('biaya'),
 						'sumber' 	=> $this->input->post('sumber'),
 						'tahun' 	=> $this->input->post('tahun'),
-						'tgl_ditetapkan' 	=> $this->input->post('tgl_ditetapkan')
+						'tgl_ditetapkan' 	=> $this->input->post('tgl_ditetapkan'),
+						'aparat' 	=> $this->input->post('aparat')
 
 					);
 
@@ -63,7 +67,8 @@ class Kegiatan extends CI_Controller {
 						'biaya' 	=> $this->input->post('biaya'),
 						'sumber' 	=> $this->input->post('sumber'),
 						'tahun' 	=> $this->input->post('tahun'),
-						'tgl_ditetapkan' 	=> $this->input->post('tgl_ditetapkan')
+						'tgl_ditetapkan' 	=> $this->input->post('tgl_ditetapkan'),
+						'aparat' 	=> $this->input->post('aparat')
 
 					);
 
