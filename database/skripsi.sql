@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: 03 Nov 2018 pada 19.39
+-- Generation Time: 03 Nov 2018 pada 19.46
 -- Versi Server: 5.6.35
 -- PHP Version: 7.0.22
 
@@ -288,7 +288,7 @@ CREATE TABLE `tbl_realisasi` (
   `gambar` text NOT NULL,
   `id_kegiatan` int(11) NOT NULL,
   `persentase` int(11) NOT NULL,
-  `dana_digunakan` varchar(50) NOT NULL,
+  `dana_digunakan` int(50) NOT NULL,
   `pj` varchar(100) NOT NULL,
   `kode` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -298,9 +298,9 @@ CREATE TABLE `tbl_realisasi` (
 --
 
 INSERT INTO `tbl_realisasi` (`id_realisasi`, `judul`, `deskripsi`, `tanggal`, `gambar`, `id_kegiatan`, `persentase`, `dana_digunakan`, `pj`, `kode`) VALUES
-(10, 'dengan adanya lokasi makam seluas 25 x 100 M ini dapat dijadikan sebagai tempat pemakaman umum ', '', '2018-05-12', 'ae1fb30f139a1fd79a948681df749050.JPG', 15, 100, '40000000', '', ''),
-(21, 'Testing', '', '2018-01-01', '', 15, 10, '1900000', 'Testing', '0411180011'),
-(22, 'testing2', '', '2018-06-01', '', 15, 40, '10000', 'testing2', '0411180022');
+(10, 'dengan adanya lokasi makam seluas 25 x 100 M ini dapat dijadikan sebagai tempat pemakaman umum ', '', '2018-05-12', 'ae1fb30f139a1fd79a948681df749050.JPG', 15, 100, 40000000, '', ''),
+(21, 'Testing', '', '2018-01-01', '', 15, 10, 1900000, 'Testing', '0411180011'),
+(22, 'testing2', '', '2018-06-01', '', 15, 40, 10000, 'testing2', '0411180022');
 
 -- --------------------------------------------------------
 
